@@ -1,0 +1,27 @@
+{
+  "schemaVersion": 1,
+  "id": "proguns",
+  "version": "${version}",
+  "name": "ProGuns",
+  "description": "Very Cool Guns",
+  "authors": [
+    "LucasHazardous"
+  ],
+  "contact": {},
+  "license": "MIT",
+  "icon": "assets/proguns/icon.png",
+  "environment": "*",
+  "entrypoints": {
+    "main": [
+      "lucas.hazardous.proguns.Proguns"
+    ]
+  },
+  "mixins": [
+    "proguns.mixins.json"
+  ],
+  "depends": {
+    "fabricloader": ">=0.13.3",
+    "fabric": "*",
+    "minecraft": "1.18.1"
+  }
+}

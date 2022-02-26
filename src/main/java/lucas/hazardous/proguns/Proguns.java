@@ -1,6 +1,5 @@
 package lucas.hazardous.proguns;
 
-import com.mojang.brigadier.builder.LiteralArgumentBuilder;
 import net.fabricmc.api.ModInitializer;
 import net.fabricmc.fabric.api.client.itemgroup.FabricItemGroupBuilder;
 import net.fabricmc.fabric.api.client.rendering.v1.EntityModelLayerRegistry;
@@ -17,7 +16,6 @@ import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityDimensions;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.SpawnGroup;
-import net.minecraft.entity.damage.DamageSource;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemGroup;
 import net.minecraft.item.ItemStack;
@@ -50,7 +48,7 @@ public class Proguns implements ModInitializer {
     public static final EntityType<ProEntity> PRO_ENTITY = Registry.register(
             Registry.ENTITY_TYPE,
             new Identifier("proguns", "pro_entity"),
-            FabricEntityTypeBuilder.create(SpawnGroup.CREATURE, ProEntity::new).dimensions(EntityDimensions.fixed(1f, 1f)).build());
+            FabricEntityTypeBuilder.create(SpawnGroup.CREATURE, ProEntity::new).dimensions(EntityDimensions.fixed(0.75f, 0.75f)).build());
 
     public static final EntityModelLayer PRO_ENTITY_LAYER = new EntityModelLayer(new Identifier("proguns", "pro_entity"), "main");
 
@@ -65,7 +63,6 @@ public class Proguns implements ModInitializer {
         }));
 
         FabricDefaultAttributeRegistry.register(PRO_ENTITY, ProEntity.createMobAttributes());
-        EntityRendererRegistry.register(Proguns.PRO_ENTITY, (context) -> new ProEntityRenderer(context));
         EntityRendererRegistry.register(Proguns.PRO_ENTITY, (context) -> new ProEntityRenderer(context));
         EntityModelLayerRegistry.registerModelLayer(PRO_ENTITY_LAYER, ProEntityModel::getTexturedModelData);
 

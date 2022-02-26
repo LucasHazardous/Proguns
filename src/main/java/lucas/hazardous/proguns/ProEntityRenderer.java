@@ -7,7 +7,7 @@ import net.minecraft.util.Identifier;
 public class ProEntityRenderer extends MobEntityRenderer<ProEntity, ProEntityModel> {
 
     public ProEntityRenderer(EntityRendererFactory.Context context) {
-        super(context, new ProEntityModel(context.getPart(Proguns.PRO_ENTITY_LAYER)), 1f);
+        super(context, new ProEntityModel(context.getPart(Proguns.PRO_ENTITY_LAYER)), 0f);
     }
 
     @Override

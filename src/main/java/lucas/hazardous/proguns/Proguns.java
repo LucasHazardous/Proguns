@@ -19,7 +19,9 @@ import net.minecraft.entity.SpawnGroup;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemGroup;
 import net.minecraft.item.ItemStack;
+import net.minecraft.item.SpawnEggItem;
 import net.minecraft.util.Identifier;
+import net.minecraft.util.Rarity;
 import net.minecraft.util.math.Vec3d;
 import net.minecraft.util.registry.Registry;
 import static net.minecraft.server.command.CommandManager.literal;
@@ -48,9 +50,11 @@ public class Proguns implements ModInitializer {
     public static final EntityType<ProEntity> PRO_ENTITY = Registry.register(
             Registry.ENTITY_TYPE,
             new Identifier("proguns", "pro_entity"),
-            FabricEntityTypeBuilder.create(SpawnGroup.CREATURE, ProEntity::new).dimensions(EntityDimensions.fixed(0.75f, 0.75f)).build());
+            FabricEntityTypeBuilder.create(SpawnGroup.CREATURE, ProEntity::new).dimensions(EntityDimensions.fixed(0.75f, 0.75f)).fireImmune().build());
 
     public static final EntityModelLayer PRO_ENTITY_LAYER = new EntityModelLayer(new Identifier("proguns", "pro_entity"), "main");
+
+    public static final Item PRO_ENTITY_SPAWN_EGG = new SpawnEggItem(PRO_ENTITY, 1500000, 16500000, new Item.Settings().group(PRO_GROUP).rarity(Rarity.EPIC));
 
     @Override
     public void onInitialize() {
@@ -65,6 +69,8 @@ public class Proguns implements ModInitializer {
         FabricDefaultAttributeRegistry.register(PRO_ENTITY, ProEntity.createMobAttributes());
         EntityRendererRegistry.register(Proguns.PRO_ENTITY, (context) -> new ProEntityRenderer(context));
         EntityModelLayerRegistry.registerModelLayer(PRO_ENTITY_LAYER, ProEntityModel::getTexturedModelData);
+
+        Registry.register(Registry.ITEM, new Identifier("proguns", "pro_entity_spawn_egg"), PRO_ENTITY_SPAWN_EGG);
 
         Registry.register(Registry.ITEM, new Identifier(MOD_ID, "pro_gun"), PRO_GUN);
 

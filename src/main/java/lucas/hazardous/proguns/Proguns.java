@@ -34,7 +34,7 @@ public class Proguns implements ModInitializer {
 
     public static final Identifier PacketID = new Identifier(Proguns.MOD_ID);
 
-    public static final ItemGroup PRO_GROUP = FabricItemGroupBuilder.create(new Identifier("proguns", "proguns_group")).build();
+    public static final ItemGroup PRO_GROUP = FabricItemGroupBuilder.create(new Identifier(MOD_ID, "proguns_group")).build();
 
     public static final ProgunItem PRO_GUN = new ProgunItem(new FabricItemSettings().group(PRO_GROUP).maxCount(1).maxDamage(1000).fireproof());
 
@@ -49,10 +49,10 @@ public class Proguns implements ModInitializer {
 
     public static final EntityType<ProEntity> PRO_ENTITY = Registry.register(
             Registry.ENTITY_TYPE,
-            new Identifier("proguns", "pro_entity"),
+            new Identifier(MOD_ID, "pro_entity"),
             FabricEntityTypeBuilder.create(SpawnGroup.CREATURE, ProEntity::new).dimensions(EntityDimensions.fixed(0.75f, 0.75f)).fireImmune().build());
 
-    public static final EntityModelLayer PRO_ENTITY_LAYER = new EntityModelLayer(new Identifier("proguns", "pro_entity"), "main");
+    public static final EntityModelLayer PRO_ENTITY_LAYER = new EntityModelLayer(new Identifier(MOD_ID, "pro_entity"), "main");
 
     public static final Item PRO_ENTITY_SPAWN_EGG = new SpawnEggItem(PRO_ENTITY, 1500000, 16500000, new Item.Settings().group(PRO_GROUP).rarity(Rarity.EPIC));
 
@@ -70,7 +70,7 @@ public class Proguns implements ModInitializer {
         EntityRendererRegistry.register(Proguns.PRO_ENTITY, (context) -> new ProEntityRenderer(context));
         EntityModelLayerRegistry.registerModelLayer(PRO_ENTITY_LAYER, ProEntityModel::getTexturedModelData);
 
-        Registry.register(Registry.ITEM, new Identifier("proguns", "pro_entity_spawn_egg"), PRO_ENTITY_SPAWN_EGG);
+        Registry.register(Registry.ITEM, new Identifier(MOD_ID, "pro_entity_spawn_egg"), PRO_ENTITY_SPAWN_EGG);
 
         Registry.register(Registry.ITEM, new Identifier(MOD_ID, "pro_gun"), PRO_GUN);
 
@@ -89,10 +89,10 @@ public class Proguns implements ModInitializer {
             float yaw = EntitySpawnPacket.PacketBufUtil.readAngle(byteBuf);
             ctx.getTaskQueue().execute(() -> {
                 if (MinecraftClient.getInstance().world == null)
-                    throw new IllegalStateException("Tried to spawn entity in a null world!");
+                    throw new IllegalStateException("Entity spawn in a null world.");
                 Entity e = et.create(MinecraftClient.getInstance().world);
                 if (e == null)
-                    throw new IllegalStateException("Failed to create instance of entity \"" + Registry.ENTITY_TYPE.getId(et) + "\"!");
+                    throw new IllegalStateException("Failed to create " + Registry.ENTITY_TYPE.getId(et));
                 e.updateTrackedPosition(pos);
                 e.setPos(pos.x, pos.y, pos.z);
                 e.setPitch(pitch);

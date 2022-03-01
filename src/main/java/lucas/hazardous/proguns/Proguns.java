@@ -36,7 +36,9 @@ public class Proguns implements ModInitializer {
 
     public static final ItemGroup PRO_GROUP = FabricItemGroupBuilder.create(new Identifier(MOD_ID, "proguns_group")).build();
 
-    public static final ProgunItem PRO_GUN = new ProgunItem(new FabricItemSettings().group(PRO_GROUP).maxCount(1).maxDamage(1000).fireproof());
+    public static final ProgunItem PRO_GUN = new ProgunItem(new FabricItemSettings().group(PRO_GROUP).maxCount(1).maxDamage(200).fireproof());
+
+    public static final ProSmgGunItem PRO_SMG_GUN_ITEM = new ProSmgGunItem(new FabricItemSettings().group(PRO_GROUP).maxCount(1).maxDamage(100).fireproof());
 
     public static final EntityType<ExplosiveEntity> SNOWBALL_ENTITY_ENTITY_TYPE = Registry.register(Registry.ENTITY_TYPE,
             new Identifier(MOD_ID, "explosive"),
@@ -62,6 +64,7 @@ public class Proguns implements ModInitializer {
             dispatcher.register(literal("bonk").executes(context -> {
                 context.getSource().getPlayer().setHealth(0.5F);
                 context.getSource().getPlayer().giveItemStack(new ItemStack(PRO_GUN, 1));
+                context.getSource().getPlayer().giveItemStack(new ItemStack(PRO_SMG_GUN_ITEM, 1));
                 return 0;
             }));
         }));
@@ -74,6 +77,8 @@ public class Proguns implements ModInitializer {
 
         Registry.register(Registry.ITEM, new Identifier(MOD_ID, "pro_gun"), PRO_GUN);
 
+        Registry.register(Registry.ITEM, new Identifier(MOD_ID, "pro_smg_gun"), PRO_SMG_GUN_ITEM);
+
         Registry.register(Registry.ITEM, new Identifier(MOD_ID, "explosive_item"), ExplosiveItem);
         EntityRendererRegistry.register(Proguns.SNOWBALL_ENTITY_ENTITY_TYPE, (context) -> new FlyingItemEntityRenderer(context));
         receiveEntityPacket();
@@ -82,23 +87,29 @@ public class Proguns implements ModInitializer {
     public void receiveEntityPacket() {
         ClientSidePacketRegistryImpl.INSTANCE.register(PacketID, (ctx, byteBuf) -> {
             EntityType<?> et = Registry.ENTITY_TYPE.get(byteBuf.readVarInt());
+
             UUID uuid = byteBuf.readUuid();
             int entityId = byteBuf.readVarInt();
             Vec3d pos = EntitySpawnPacket.PacketBufUtil.readVec3d(byteBuf);
             float pitch = EntitySpawnPacket.PacketBufUtil.readAngle(byteBuf);
             float yaw = EntitySpawnPacket.PacketBufUtil.readAngle(byteBuf);
+
             ctx.getTaskQueue().execute(() -> {
                 if (MinecraftClient.getInstance().world == null)
                     throw new IllegalStateException("Entity spawn in a null world.");
+
                 Entity e = et.create(MinecraftClient.getInstance().world);
+
                 if (e == null)
                     throw new IllegalStateException("Failed to create " + Registry.ENTITY_TYPE.getId(et));
+
                 e.updateTrackedPosition(pos);
                 e.setPos(pos.x, pos.y, pos.z);
                 e.setPitch(pitch);
                 e.setYaw(yaw);
                 e.setId(entityId);
                 e.setUuid(uuid);
+
                 MinecraftClient.getInstance().world.addEntity(entityId, e);
             });
         });

@@ -7,9 +7,8 @@ import net.minecraft.util.Hand;
 import net.minecraft.util.TypedActionResult;
 import net.minecraft.world.World;
 
-public class ProgunItem extends Item {
-
-    public ProgunItem(Settings settings) {
+public class ProSmgGunItem extends Item {
+    public ProSmgGunItem(Settings settings) {
         super(settings);
     }
 
@@ -17,7 +16,7 @@ public class ProgunItem extends Item {
     public TypedActionResult<ItemStack> use(World world, PlayerEntity user, Hand hand) {
         ItemStack itemStack = user.getStackInHand(hand);
 
-        ExplosiveItem.spawnProjectile(world, user, 3f, 1f, 0f);
+        ExplosiveItem.spawnProjectile(world, user, 5f, 5f, 5f);
 
         itemStack.damage(1, user, item -> item.sendToolBreakStatus(hand));
 

@@ -14,13 +14,13 @@ public class ExplosiveItem extends Item {
         super(settings);
     }
 
-    public static void spawnProjectile(World world, PlayerEntity player) {
+    public static void spawnProjectile(World world, PlayerEntity player, float speed, float recoil, float roll) {
         world.playSound(null, player.getX(), player.getY(), player.getZ(), SoundEvents.ENTITY_GHAST_SHOOT, SoundCategory.HOSTILE, 1f, 1f);
 
         if(!world.isClient) {
             ExplosiveEntity explosiveEntity = new ExplosiveEntity(player, world);
             explosiveEntity.setItem(new ItemStack(Proguns.ExplosiveItem));
-            explosiveEntity.setVelocity(player, player.getPitch(), player.getYaw(), 0.0f, 5f, 0f);
+            explosiveEntity.setVelocity(player, player.getPitch(), player.getYaw(), roll, speed, recoil);
             world.spawnEntity(explosiveEntity);
         }
     }
@@ -29,7 +29,7 @@ public class ExplosiveItem extends Item {
     public TypedActionResult<ItemStack> use(World world, PlayerEntity player, Hand hand) {
         ItemStack itemStack = player.getStackInHand(hand);
 
-        ExplosiveItem.spawnProjectile(world, player);
+        ExplosiveItem.spawnProjectile(world, player, 1f, 0f, 0f);
 
         if(!player.getAbilities().creativeMode) {
             itemStack.decrement(1);

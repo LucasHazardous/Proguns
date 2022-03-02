@@ -58,6 +58,8 @@ public class Proguns implements ModInitializer {
 
     public static final Item PRO_ENTITY_SPAWN_EGG = new SpawnEggItem(PRO_ENTITY, 1500000, 16500000, new Item.Settings().group(PRO_GROUP).rarity(Rarity.EPIC));
 
+    public static final Item PRO_SNIPER_GUN = new ProSniperGun(new FabricItemSettings().maxCount(1).maxDamage(250).fireproof().group(PRO_GROUP));
+
     @Override
     public void onInitialize() {
         CommandRegistrationCallback.EVENT.register(((dispatcher, dedicated) -> {
@@ -78,6 +80,8 @@ public class Proguns implements ModInitializer {
         Registry.register(Registry.ITEM, new Identifier(MOD_ID, "pro_gun"), PRO_GUN);
 
         Registry.register(Registry.ITEM, new Identifier(MOD_ID, "pro_smg_gun"), PRO_SMG_GUN_ITEM);
+
+        Registry.register(Registry.ITEM, new Identifier(MOD_ID, "pro_sniper_gun"), PRO_SNIPER_GUN);
 
         Registry.register(Registry.ITEM, new Identifier(MOD_ID, "explosive_item"), ExplosiveItem);
         EntityRendererRegistry.register(Proguns.SNOWBALL_ENTITY_ENTITY_TYPE, (context) -> new FlyingItemEntityRenderer(context));

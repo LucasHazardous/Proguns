@@ -6,6 +6,7 @@
   "mixins": [
   ],
   "client": [
+    "ProSniperZoomMixin"
   ],
   "injectors": {
     "defaultRequire": 1

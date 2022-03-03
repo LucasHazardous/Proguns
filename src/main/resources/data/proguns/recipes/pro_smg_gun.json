@@ -2,25 +2,25 @@
   "type": "minecraft:crafting_shaped",
   "pattern": [
     "INI",
-    "GRG",
+    "WRW",
     "III"
   ],
   "key": {
     "I": {
       "item": "minecraft:iron_ingot"
     },
-    "G": {
-      "item": "minecraft:gunpowder"
-    },
     "N": {
       "item": "minecraft:netherite_ingot"
     },
     "R": {
       "item": "minecraft:redstone"
+    },
+    "W": {
+      "item": "minecraft:water_bucket"
     }
   },
   "result": {
-    "item": "proguns:pro_gun",
+    "item": "proguns:pro_smg_gun",
     "count": 1
   }
 }

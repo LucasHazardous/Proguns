@@ -1,8 +1,8 @@
 {
   "type": "minecraft:crafting_shaped",
   "pattern": [
-    "INI",
-    "GRG",
+    "SNI",
+    "WRG",
     "III"
   ],
   "key": {
@@ -17,10 +17,16 @@
     },
     "R": {
       "item": "minecraft:redstone"
+    },
+    "W": {
+      "item": "minecraft:water_bucket"
+    },
+    "S": {
+      "item": "minecraft:spyglass"
     }
   },
   "result": {
-    "item": "proguns:pro_gun",
+    "item": "proguns:pro_sniper_gun",
     "count": 1
   }
 }

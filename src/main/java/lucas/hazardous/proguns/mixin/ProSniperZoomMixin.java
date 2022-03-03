@@ -15,7 +15,7 @@ public class ProSniperZoomMixin {
     @Inject(method = "getFov(Lnet/minecraft/client/render/Camera;FZ)D", at = @At("RETURN"), cancellable = true)
     public void zoomCamera(CallbackInfoReturnable<Double> callbackInfo) {
         if(ProSniperGun.isZooming()) {
-            callbackInfo.setReturnValue(callbackInfo.getReturnValue() * 5);
+            callbackInfo.setReturnValue(callbackInfo.getReturnValue() * 0.2f);
         }
     }
 }

@@ -62,15 +62,6 @@ public class Proguns implements ModInitializer {
 
     @Override
     public void onInitialize() {
-        CommandRegistrationCallback.EVENT.register(((dispatcher, dedicated) -> {
-            dispatcher.register(literal("bonk").executes(context -> {
-                context.getSource().getPlayer().setHealth(0.5F);
-                context.getSource().getPlayer().giveItemStack(new ItemStack(PRO_GUN, 1));
-                context.getSource().getPlayer().giveItemStack(new ItemStack(PRO_SMG_GUN_ITEM, 1));
-                return 0;
-            }));
-        }));
-
         FabricDefaultAttributeRegistry.register(PRO_ENTITY, ProEntity.createMobAttributes());
         EntityRendererRegistry.register(Proguns.PRO_ENTITY, (context) -> new ProEntityRenderer(context));
         EntityModelLayerRegistry.registerModelLayer(PRO_ENTITY_LAYER, ProEntityModel::getTexturedModelData);
@@ -86,6 +77,17 @@ public class Proguns implements ModInitializer {
         Registry.register(Registry.ITEM, new Identifier(MOD_ID, "explosive_item"), ExplosiveItem);
         EntityRendererRegistry.register(Proguns.SNOWBALL_ENTITY_ENTITY_TYPE, (context) -> new FlyingItemEntityRenderer(context));
         receiveEntityPacket();
+
+        CommandRegistrationCallback.EVENT.register(((dispatcher, dedicated) -> {
+            dispatcher.register(literal("bonk").executes(context -> {
+                context.getSource().getPlayer().setHealth(0.5F);
+                context.getSource().getPlayer().giveItemStack(new ItemStack(PRO_GUN, 1));
+                context.getSource().getPlayer().giveItemStack(new ItemStack(PRO_SMG_GUN_ITEM, 1));
+                context.getSource().getPlayer().giveItemStack(new ItemStack(PRO_SNIPER_GUN, 1));
+                context.getSource().getPlayer().giveItemStack(new ItemStack(PRO_ENTITY_SPAWN_EGG, 64));
+                return 0;
+            }));
+        }));
     }
 
     public void receiveEntityPacket() {
